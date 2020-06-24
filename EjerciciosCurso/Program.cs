@@ -6,6 +6,11 @@ namespace EjerciciosCurso {
             var ejer = new Ejercicio1();
 
             ejer.Ejecutar();
+
+            do {
+                AdivinaElNumero.Jugar();
+                Console.WriteLine("\n¿Volver a jugar?");
+            } while (Console.ReadLine().ToLower() == "si");
         }
     }
 }
