@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace EjerciciosCurso {
-    public class Point {
+    public class Point: ICloneable {
         public Point(double x, double y) {
             X = x;
             Y = y;
@@ -13,33 +13,40 @@ namespace EjerciciosCurso {
         public double Y { get; set; }
         public double Distance => Math.Sqrt(X * X + Y * Y);
 
-        //public override bool Equals(object obj) {
-        //    return obj is Point punto &&
-        //           X == punto.X &&
-        //           Y == punto.Y;
-        //}
+        public object Clone() {
+            return new Point(this.X, this.Y);
+        }
 
-        //public override int GetHashCode() {
-        //    return base.GetHashCode();
-        //}
+        public override bool Equals(object obj) {
+            return obj is Point punto &&
+                   X == punto.X &&
+                   Y == punto.Y;
+        }
 
-        //public static bool operator ==(Point left, Point right) {
-        //    return left.Equals(right);
-        //}
+        public override int GetHashCode() {
+            return base.GetHashCode();
+        }
 
-        //public static bool operator !=(Point left, Point right) {
-        //    return !(left == right);
-        //}
+        public static bool operator ==(Point left, Point right) {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Point left, Point right) {
+            return !(left == right);
+        }
     }
 
     public class Line {
+        private readonly Point punto1;
+        private readonly Point punto2;
+
         public Line(Point punto1, Point punto2) {
-            Punto1 = punto1;
-            Punto2 = punto2;
+            this.punto1 = punto1;
+            this.punto2 = punto2;
         }
 
-        public Point Punto1 { get; set; }
-        public Point Punto2 { get; set; }
+        public Point Punto1 { get => punto1.Clone() as Point;  }
+        public Point Punto2 { get => punto2.Clone() as Point;  }
 
         public double DeltaX() { return Math.Abs(Punto1.X - Punto2.X); }
         public double DeltaY() { return Math.Abs(Punto1.Y - Punto2.Y); }
@@ -93,13 +100,13 @@ namespace EjerciciosCurso {
             Console.WriteLine($"Ant: {Ant} Pos: {Pos} Iguales: {Ant == Pos}");
         }
 
-        void Add(Point p) { p.X = p.X + 1; }
+        void Add(Point p) { p.X += 1; }
 
         public void Caso4() {
             var L = new Line(new Point(3, 5), new Point(3, 5));
             var P = L.Punto1;
             var Ant = L.DeltaX();
-            Add(P);
+            Add(P.Clone() as Point);
             var Pos = L.DeltaX();
 
             Console.WriteLine($"\nPaso por Referencias");
