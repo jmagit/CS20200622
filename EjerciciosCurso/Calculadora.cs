@@ -9,6 +9,8 @@ namespace EjerciciosCurso {
 
         public decimal Acumulador { get => acumulador; }
 
+        public event EventHandler<CalculoEventArgs> Resultado;
+
         public void Init() {
             acumulador = 0;
             pendiente = "+";
@@ -71,7 +73,15 @@ namespace EjerciciosCurso {
                 default:
                     throw new Exception("Operación desconocida.");
             }
+            OnResultado(new CalculoEventArgs() { Operando = numero, Operacion = operacion, Resultado = acumulador });
             pendiente = operacion;
+        }
+
+        protected void OnResultado(CalculoEventArgs e) {
+            Resultado?.Invoke(this, e);
+            //if (Resultado != null)
+            //    Resultado(this, e);
+
         }
         public void Calcula(string cad) {
             Init();
@@ -113,5 +123,11 @@ namespace EjerciciosCurso {
             if (!operComplet)
                 throw new Exception("Falta el =");
         }
+    }
+
+    class CalculoEventArgs : EventArgs {
+        public decimal Operando { get; set; }
+        public string Operacion { get; set; }
+        public decimal Resultado { get; set; }
     }
 }
