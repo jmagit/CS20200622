@@ -5,13 +5,16 @@ using System.Drawing;
 using static System.Math;
 using System.IO;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
+using Majorel.Demos.Cursos;
+using System.Linq;
 
 namespace Majorel.Demos {
     public enum DiasLaborales {
-        Lunes = 1, 
-        Martes, 
-        Miercoles = 7, 
-        Jueves, 
+        Lunes = 1,
+        Martes,
+        Miercoles = 7,
+        Jueves,
         Viernes
     }
 
@@ -26,11 +29,11 @@ namespace Majorel.Demos {
                 if (veces == 0)
                     return;
                 nombre = nombre.ToUpper();
-                for(int i = 1; i <= veces; i++)
+                for (int i = 1; i <= veces; i++)
                     Console.WriteLine($"{saludo} {nombre}");
             }
             public void Saluda(params string[] varios) {
-                foreach(var item in varios)
+                foreach (var item in varios)
                     Console.WriteLine($"Hola {item}");
             }
 
@@ -49,6 +52,59 @@ namespace Majorel.Demos {
     /// </summary>
     public class Program {
         static void Main(string[] args) {
+            var alumnos = new List<Alumno>();
+            alumnos.Add(new Alumno("Alberto", "Gonzalez"));
+            alumnos.Add(new Alumno("Carlos", "Sanchez"));
+            foreach (var item in alumnos) {
+                Console.WriteLine($"{item.Nombre} {item.Apellidos}");
+            }
+            Console.WriteLine($"----------------------------------");
+            Console.WriteLine($"{alumnos[0].Nombre} {alumnos[0].Apellidos}");
+            // alumnos.RemoveAt(0);
+            alumnos.Add(new Alumno("Fernando", "Soto"));
+            alumnos.Add(new Alumno("Antonio", "Martos"));
+            alumnos.Add(new Alumno("Antonio", "Rodriguez"));
+            Console.WriteLine($"----------------------------------");
+            foreach (var item in alumnos) {
+                Console.WriteLine($"{item.Nombre} {item.Apellidos}");
+            }
+            Console.WriteLine($"----------------------------------");
+            var profesores = new Dictionary<string, Profesor>();
+            profesores.Add("C#", new Profesor("Javier", "Martin"));
+            var profe = profesores["C#"];
+            profe.Edad = 33;
+            profe = profesores.FirstOrDefault(o => 25 < o.Value.Edad && o.Value.Edad < 50).Value;
+
+            profe.Alumnos.AddRange(alumnos);
+
+            Console.WriteLine($"{profe.Nombre} {profe.Apellidos}");
+            foreach (var item in profesores.Values
+                .Where(p => p.Alumnos.Any(a => a.Nombre == "Carlos")).ToList()) {
+                Console.WriteLine($"{item.Nombre} {item.Apellidos}");
+            }
+
+            Console.WriteLine($"----------------------------------");
+
+            foreach (var item in alumnos
+                    .Where(o => o.Nombre.StartsWith("A"))
+                    .OrderByDescending(o => o.Apellidos)
+                    .Take(2)
+                    .Select(o => new { nombre = $"{o.Nombre} {o.Apellidos}" })
+                    .ToList()) {
+                Console.WriteLine($"{item.nombre}");
+            }
+
+            var q = alumnos
+                    .Where(o => o.Nombre.StartsWith("A"));
+            q = q.OrderByDescending(o => o.Apellidos);
+            //q = q.Take(2)
+            //        .Select(o => new { nombre = $"{o.Nombre} {o.Apellidos}" });
+            foreach (var item in q.ToList()) {
+                Console.WriteLine($"{item.Nombre}");
+            }
+
+        }
+        static void kkk(string[] args) {
             var ele = new Elemento<int>(1, "Algo");
             ele.Key = 1;
             var eleStr = new Elemento<string>("uno", "unos");
@@ -143,7 +199,7 @@ namespace Majorel.Demos {
             Console.WriteLine(cad);
             Console.WriteLine(persona.Nombre);
             Console.WriteLine(persona.ToString());
-            if(alumno.Equals(persona))
+            if (alumno.Equals(persona))
                 Console.WriteLine("Son iguales");
             else
                 Console.WriteLine("Son distintos");

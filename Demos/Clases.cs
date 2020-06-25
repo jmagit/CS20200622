@@ -39,6 +39,7 @@ namespace Majorel.Demos.Cursos {
 
         public int Edad { get; set; } = 25;
         public int Id { get => id; set => id = value; }
+        public string Apellidos { get => apellidos; set => apellidos = value; }
 
         public virtual void Pintate() {
             Console.WriteLine($"Persona: {nombre} {apellidos} de un total de {cont}");
@@ -59,6 +60,7 @@ namespace Majorel.Demos.Cursos {
     }
 
     public partial class Profesor : Persona, IDisposable {
+        public List<Alumno> Alumnos { get; set; } = new List<Alumno>();
         public Profesor(string nombre, string apellidos) : base(nombre, apellidos) {
         }
         public Profesor() : base("Anonimo", null) {
