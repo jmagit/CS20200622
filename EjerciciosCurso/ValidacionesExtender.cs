@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace EjerciciosCurso {
-    public static class Validaciones {
+namespace EjerciciosCurso.Util {
+    public static class ValidacionesExtender {
         public static bool IsEmpty(this String value) {
             return String.IsNullOrWhiteSpace(value);
         }
@@ -19,6 +19,12 @@ namespace EjerciciosCurso {
         public static bool NotIsNumeric(this String value) {
             return !IsNumeric(value);
         }
+        /// <summary>
+        /// Valida la longitud máxima de la cadena
+        /// </summary>
+        /// <param name="value">Valor a validar</param>
+        /// <param name="len">longitud maxima</param>
+        /// <returns>Cumple la regla</returns>
         public static bool IsLenMax(this String value, int len) {
             return (value ?? "").Length <= len;
         }

@@ -3,6 +3,8 @@ using corto = Majorel.Demos.Cursos;
 using System;
 using System.Drawing;
 using static System.Math;
+using System.IO;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Majorel.Demos {
     public enum DiasLaborales {
@@ -47,6 +49,17 @@ namespace Majorel.Demos {
     /// </summary>
     public class Program {
         static void Main(string[] args) {
+            var ele = new Elemento<int>(1, "Algo");
+            ele.Key = 1;
+            var eleStr = new Elemento<string>("uno", "unos");
+            var ele2 = new Elemento<int>(1, "Algo");
+
+            //Tablero t = ...;
+            //t.ponPieza(Fila, Columna, Pieza);
+            //t[Fila, Columna] = Pieza;
+            //p = t.damePieza(Fila, Columna);
+            //p = t[Fila, Columna];
+
             int nuevo = 5; int año = 11, estado = 0;
             double d = 1;
             const int MAX = 5;

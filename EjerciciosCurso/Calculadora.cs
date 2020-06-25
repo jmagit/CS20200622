@@ -16,6 +16,7 @@ namespace EjerciciosCurso {
             pendiente = "+";
         }
 
+        [Obsolete("Versión dependiente de la consola")]
         public void Decodificar(string cad) {
             var operComplet = false;
             var finNum = false;
@@ -77,7 +78,7 @@ namespace EjerciciosCurso {
             pendiente = operacion;
         }
 
-        protected void OnResultado(CalculoEventArgs e) {
+        protected virtual void OnResultado(CalculoEventArgs e) {
             Resultado?.Invoke(this, e);
             //if (Resultado != null)
             //    Resultado(this, e);
@@ -125,7 +126,7 @@ namespace EjerciciosCurso {
         }
     }
 
-    class CalculoEventArgs : EventArgs {
+    public class CalculoEventArgs : EventArgs {
         public decimal Operando { get; set; }
         public string Operacion { get; set; }
         public decimal Resultado { get; set; }

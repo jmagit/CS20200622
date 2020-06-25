@@ -13,9 +13,11 @@ namespace EjerciciosCurso {
         }
 
         public abstract double Area { get; }
+        // public abstract double dameArea();
     }
 
     public class Circulo : Figura {
+        public double Radio { get; set; }
         public Circulo(double radio) {
             Radio = radio;
         }
@@ -23,7 +25,6 @@ namespace EjerciciosCurso {
             Radio = radio;
         }
 
-        public double Radio { get; set; }
         public override double Area => Math.PI * Math.Pow(Radio, 2);
 
         public override string ToString() {
@@ -89,8 +90,6 @@ namespace EjerciciosCurso {
 
         public Cuadrado(double lado) : base (lado, lado) { }
         public Cuadrado(double lado, Color color) : base (lado, lado, color) { }
-
-        public override double Area => LadoA * LadoB;
 
         public override string ToString() {
             return $"Cuadrado [Lado: {Lado} Color: {Color} Área: {Area}]";
