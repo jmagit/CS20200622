@@ -12,6 +12,8 @@ using CsvHelper;
 using System.Globalization;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Data.SqlClient;
+using Majorel.Demos.AdventureWorks2017DataSetTableAdapters;
 
 namespace Majorel.Demos {
     public enum DiasLaborales {
@@ -99,6 +101,42 @@ namespace Majorel.Demos {
         }
 
         static void Main(string[] args) {
+            //var conn = new SqlConnection("Data Source=localhost;Initial Catalog=AdventureWorks2017;Integrated Security=True");
+            //var cmd = conn.CreateCommand();
+            //cmd.CommandType = System.Data.CommandType.Text;
+            //cmd.CommandText = "SELECT * FROM [Production].[ProductCategory] where ProductCategoryID = @id";
+            //cmd.Parameters.Add("@id", System.Data.SqlDbType.Int);
+            //cmd.Parameters["@id"].Value = 1;
+            //cmd.Connection.Open();
+            //cmd.Transaction = cmd.Connection.BeginTransaction();
+            //var dr = cmd.ExecuteReader();
+            //while(dr.Read()) {
+            //    Console.WriteLine($"{dr.GetInt32(0)}\t{dr.GetString(1)}");                
+            //}
+            //dr.Close();
+            //cmd.CommandText = "SELECT count(*) FROM [Production].[ProductCategory]";
+            //Console.WriteLine($"count: {cmd.ExecuteScalar()}");
+            //cmd.CommandText = "INSERT INTO Production.ProductCategory(Name) VALUES ('NUEVA')";
+            //Console.WriteLine($"ele: {cmd.ExecuteNonQuery()}");
+            //cmd.Transaction.Commit();
+            //cmd.Connection.Close();
+
+            var ds = new AdventureWorks2017DataSet();
+            var dt = new AdventureWorks2017DataSetTableAdapters.ProductCategoryTableAdapter();
+            dt.Fill(ds.ProductCategory);
+            foreach(var item in ds.ProductCategory.Rows) {
+                var row = item as AdventureWorks2017DataSet.ProductCategoryRow;
+                Console.WriteLine($"{row.Name}");
+            }
+            ds.ProductCategory.Rows[4][1] = "OTRO";
+            foreach(var item in ds.ProductCategory.Rows) {
+                var row = item as AdventureWorks2017DataSet.ProductCategoryRow;
+                Console.WriteLine($"{row.Name}");
+            }
+            dt.Update(ds.ProductCategory);
+
+        }
+        static void Colecciones(string[] args) {
             var alumnos = new List<Alumno>();
             /*
                         alumnos.Add(new Alumno("Alberto", "Gonzalez"));
@@ -160,9 +198,9 @@ namespace Majorel.Demos {
             */
             DeserializarAlumnos(out alumnos);
             foreach (var item in alumnos) {
-                Console.WriteLine($"{item.Id}\t{item.Nombre}{(item.Nombre.Length < 8 ? "\t" : "")}\t{item.Apellidos}{((item.Apellidos??"").Length < 8 ? "\t" : "")}\t{item.Edad}");
+                Console.WriteLine($"{item.Id}\t{item.Nombre}{(item.Nombre.Length < 8 ? "\t" : "")}\t{item.Apellidos}{((item.Apellidos ?? "").Length < 8 ? "\t" : "")}\t{item.Edad}");
             }
-            
+
         }
         static void kkk(string[] args) {
             var ele = new Elemento<int>(1, "Algo");

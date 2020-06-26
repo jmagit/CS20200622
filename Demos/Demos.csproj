@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="15.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,9 +17,34 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="AdventureWorks2017DataSet.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AdventureWorks2017DataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="AWModel.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AWModel.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="AdventureWorks2017DataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>AdventureWorks2017DataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="AWModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AWModel.cs</LastGenOutput>
+    </None>
     <None Update="personas.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 
 </Project>
