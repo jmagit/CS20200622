@@ -80,6 +80,10 @@ namespace Majorel.Demos.Cursos {
     public class Alumno : Persona {
         public Alumno(string nombre, string apellidos) : base(nombre, apellidos) {
         }
+        public Alumno(int id, string nombre, string apellidos, int edad) : base(nombre, apellidos) {
+            Id = id;
+            Edad = edad;
+        }
 
         public override void Despide() {
             throw new NotImplementedException();

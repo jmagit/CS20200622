@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,9 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="Entrada.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\Ajedrez\Ajedrez.csproj" />
   </ItemGroup>
 
 </Project>

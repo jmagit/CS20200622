@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="ImgAjedrez\alfilb.gif" />
+    <None Remove="ImgAjedrez\alfiln.gif" />
+    <None Remove="ImgAjedrez\caballob.gif" />
+    <None Remove="ImgAjedrez\caballon.gif" />
+    <None Remove="ImgAjedrez\damab.gif" />
+    <None Remove="ImgAjedrez\daman.gif" />
+    <None Remove="ImgAjedrez\peonb.gif" />
+    <None Remove="ImgAjedrez\peonn.gif" />
+    <None Remove="ImgAjedrez\reyb.gif" />
+    <None Remove="ImgAjedrez\reyn.gif" />
+    <None Remove="ImgAjedrez\torreb.gif" />
+    <None Remove="ImgAjedrez\torren.gif" />
+    <None Remove="MBlanco.jpg" />
+    <None Remove="MNegro.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ajedrez\Ajedrez.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="ImgAjedrez\alfilb.gif" />
+    <Resource Include="ImgAjedrez\alfiln.gif" />
+    <Resource Include="ImgAjedrez\caballob.gif" />
+    <Resource Include="ImgAjedrez\caballon.gif" />
+    <Resource Include="ImgAjedrez\damab.gif" />
+    <Resource Include="ImgAjedrez\daman.gif" />
+    <Resource Include="ImgAjedrez\peonb.gif" />
+    <Resource Include="ImgAjedrez\peonn.gif" />
+    <Resource Include="ImgAjedrez\reyb.gif" />
+    <Resource Include="ImgAjedrez\reyn.gif" />
+    <Resource Include="ImgAjedrez\torreb.gif" />
+    <Resource Include="ImgAjedrez\torren.gif" />
+    <Resource Include="MBlanco.jpg" />
+    <Resource Include="MNegro.jpg" />
+  </ItemGroup>
+
+</Project>

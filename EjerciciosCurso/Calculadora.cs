@@ -124,6 +124,20 @@ namespace EjerciciosCurso {
             if (!operComplet)
                 throw new Exception("Falta el =");
         }
+ 
+
+        public void Ficheros() {
+            string line;
+            System.IO.StreamReader fileIn = new System.IO.StreamReader(@"Entrada.txt");
+            using (System.IO.StreamWriter fileOut = new System.IO.StreamWriter(@"Salida.txt"))
+                while ((line = fileIn.ReadLine()) != null) {
+                    Decodificar(line, (n, o) => fileOut.Write($"{n}\r\n{o}"));
+                    Calcula(line);
+                    fileOut.WriteLine($"====================\r\n{acumulador}");
+                }
+            fileIn.Close();
+
+        }
     }
 
     public class CalculoEventArgs : EventArgs {

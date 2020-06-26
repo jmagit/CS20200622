@@ -1,8 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using EjerciciosCurso.Util;
 
 namespace EjerciciosCurso {
+    public interface IGrafico {
+        void Pintate();
+    }
+
     class Program {
 
         static void Pinta(string n, string o) {
@@ -25,42 +30,42 @@ namespace EjerciciosCurso {
             //    Console.WriteLine("\n¿Volver a jugar?");
             //} while (Console.ReadLine().ToLower() == "si");
 
-            try {
-                Calculadora calculadora = new Calculadora();
-                calculadora.Decodificar("3+4+3,4-7*1=");
-                //calculadora.Decodificar("3333  + 4,6 +3,4 -7* 1=");
-                //Action<string, string> fn = delegate (string n, string o) {
-                //    Console.WriteLine($"\t{n}\t{o}");
-                //};
-                //calculadora.Decodificar("3+4+3,4-7*1=", Program.Pinta);
-                //calculadora.Decodificar("3+4+3,4-7*1=", delegate (string n, string o) {
-                //    Console.WriteLine($"\t\t{n}\t{o}");
-                //});
-                //calculadora.Decodificar("3+4+3,4-7*1=", (n, o) => Console.WriteLine($"\t\t{n}\t{o}"));
-                int cont = 0;
-                string titulo = "algo";
-                EventHandler<CalculoEventArgs> fn = (sender, e) => cont++;
-                calculadora.Resultado += (sender, e) => Console.WriteLine($"{titulo} {e.Operando}\t{e.Operacion} --> {e.Resultado}");
-                calculadora.Resultado += fn;
-                calculadora.Calcula("3+4+3,4-7*1=");
-                Console.WriteLine(calculadora.Acumulador);
-                Console.WriteLine(cont);
-                calculadora.Resultado -= fn;
-                cont = 0;
-                titulo = "";
-                calculadora.Calcula("3+4+3,4-7*1=");
-                Console.WriteLine(calculadora.Acumulador);
-                Console.WriteLine(cont);
+            //try {
+            //    Calculadora calculadora = new Calculadora();
+            //    calculadora.Decodificar("3+4+3,4-7*1=");
+            //    //calculadora.Decodificar("3333  + 4,6 +3,4 -7* 1=");
+            //    //Action<string, string> fn = delegate (string n, string o) {
+            //    //    Console.WriteLine($"\t{n}\t{o}");
+            //    //};
+            //    //calculadora.Decodificar("3+4+3,4-7*1=", Program.Pinta);
+            //    //calculadora.Decodificar("3+4+3,4-7*1=", delegate (string n, string o) {
+            //    //    Console.WriteLine($"\t\t{n}\t{o}");
+            //    //});
+            //    //calculadora.Decodificar("3+4+3,4-7*1=", (n, o) => Console.WriteLine($"\t\t{n}\t{o}"));
+            //    int cont = 0;
+            //    string titulo = "algo";
+            //    EventHandler<CalculoEventArgs> fn = (sender, e) => cont++;
+            //    calculadora.Resultado += (sender, e) => Console.WriteLine($"{titulo} {e.Operando}\t{e.Operacion} --> {e.Resultado}");
+            //    calculadora.Resultado += fn;
+            //    calculadora.Calcula("3+4+3,4-7*1=");
+            //    Console.WriteLine(calculadora.Acumulador);
+            //    Console.WriteLine(cont);
+            //    calculadora.Resultado -= fn;
+            //    cont = 0;
+            //    titulo = "";
+            //    calculadora.Calcula("3+4+3,4-7*1=");
+            //    Console.WriteLine(calculadora.Acumulador);
+            //    Console.WriteLine(cont);
 
-            } catch (Exception e) {
-                Console.WriteLine("ERROR: " + e.Message);
-            }
+            //} catch (Exception e) {
+            //    Console.WriteLine("ERROR: " + e.Message);
+            //}
 
             //string cad = "Hola mundo";
             //Console.WriteLine(ValidacionesExtender.IsLenMax(cad, 10));
             //Console.WriteLine(cad.IsLenMax(10));
 
-            //Figura[] tabla = { new Circulo(10), new Triangulo(5, 10, Color.Green), new Rectangulo(5, 10), new Cuadrado(10, Color.Red) };
+            Figura[] tabla = { new Circulo(10), new Triangulo(5, 10, Color.Green), new Rectangulo(5, 10), new Cuadrado(10, Color.Red) };
             //double areaTabla = 0;
             //foreach (var f in tabla)
             //    areaTabla += f.Area;
@@ -91,6 +96,16 @@ namespace EjerciciosCurso {
             //Type clase = ensamblado.GetType(nom);
             //dynamic instancia = ensamblado.CreateInstance(nom, ); // = clase.
             //areaTabla = instancia.Area;
+
+            List<IGrafico> lista = new List<IGrafico>();
+            lista.AddRange(tabla);
+            lista.Insert(0, new Point(3, 5));
+            lista.Insert(3, new Line(new Point(0, 0), new Point(20, 10)));
+            lista.Add(new Point(5, 3));
+            foreach (var item in lista)
+                item.Pintate();
+
+            new Calculadora().Ficheros();
         }
     }
 }

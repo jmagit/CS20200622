@@ -8,6 +8,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
 using Majorel.Demos.Cursos;
 using System.Linq;
+using CsvHelper;
+using System.Globalization;
 
 namespace Majorel.Demos {
     public enum DiasLaborales {
@@ -20,7 +22,6 @@ namespace Majorel.Demos {
 
     public interface IGrafico {
         void Pintate();
-        string ToString();
     }
 
     namespace Cursos {
@@ -51,6 +52,36 @@ namespace Majorel.Demos {
     /// Mi primera clase
     /// </summary>
     public class Program {
+        static void CargaAlumnos(List<Alumno> lst) {
+            StreamReader file = new StreamReader(@"personas.csv");
+            string line;
+            string[] row;
+            line = file.ReadLine(); // Linea de cabecera
+            if (line != null)
+                while ((line = file.ReadLine()) != null) {
+                    row = line.Split(',');
+                    lst.Add(new Alumno(
+                            int.Parse(row[0]),
+                            row[1],
+                            row[2],
+                            int.Parse(row[3])
+                        ));
+                }
+            file.Close();
+            //using (var reader = new StreamReader("personas.csv"))
+            //using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture)) {
+            //    lst.AddRange(csv.GetRecords<Alumno>());
+            //}
+        }
+        static void GuardaAlumnos(List<Alumno> lst) {
+            using (System.IO.StreamWriter fileOut = new System.IO.StreamWriter(@"resultados.csv")) {
+                fileOut.WriteLine("id,nombre,apellidos,edad");
+                foreach (var item in lst) {
+                    fileOut.WriteLine($"{item.Id},{item.Nombre},{item.Apellidos},{item.Edad}");
+                }
+            }
+        }
+
         static void Main(string[] args) {
             var alumnos = new List<Alumno>();
             alumnos.Add(new Alumno("Alberto", "Gonzalez"));
@@ -84,24 +115,30 @@ namespace Majorel.Demos {
             }
 
             Console.WriteLine($"----------------------------------");
-
+            alumnos.Clear();
+            CargaAlumnos(alumnos);
+            foreach (var item in alumnos) {
+                Console.WriteLine($"{item.Id}\t{item.Nombre}{(item.Nombre.Length < 8 ? "\t" : "")}\t{item.Apellidos}{(item.Apellidos.Length < 8 ? "\t" : "")}\t{item.Edad}");
+            }
             foreach (var item in alumnos
                     .Where(o => o.Nombre.StartsWith("A"))
                     .OrderByDescending(o => o.Apellidos)
-                    .Take(2)
+                    .Take(5)
                     .Select(o => new { nombre = $"{o.Nombre} {o.Apellidos}" })
                     .ToList()) {
                 Console.WriteLine($"{item.nombre}");
             }
-
-            var q = alumnos
-                    .Where(o => o.Nombre.StartsWith("A"));
-            q = q.OrderByDescending(o => o.Apellidos);
-            //q = q.Take(2)
-            //        .Select(o => new { nombre = $"{o.Nombre} {o.Apellidos}" });
-            foreach (var item in q.ToList()) {
-                Console.WriteLine($"{item.Nombre}");
-            }
+            GuardaAlumnos(alumnos
+                    .Where(o => o.Nombre.StartsWith("A"))
+                    .OrderByDescending(o => o.Apellidos).ToList());
+            //var q = alumnos
+            //        .Where(o => o.Nombre.StartsWith("A"));
+            //q = q.OrderByDescending(o => o.Apellidos);
+            ////q = q.Take(2)
+            ////        .Select(o => new { nombre = $"{o.Nombre} {o.Apellidos}" });
+            //foreach (var item in q.ToList()) {
+            //    Console.WriteLine($"{item.Nombre}");
+            //}
 
         }
         static void kkk(string[] args) {

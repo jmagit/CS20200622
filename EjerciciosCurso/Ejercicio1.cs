@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace EjerciciosCurso {
-    public class Point: ICloneable {
+    public class Point : ICloneable, IGrafico {
         public Point(double x, double y) {
             X = x;
             Y = y;
@@ -27,6 +27,10 @@ namespace EjerciciosCurso {
             return base.GetHashCode();
         }
 
+        public void Pintate() {
+            Console.WriteLine(ToString());
+        }
+
         public static bool operator ==(Point left, Point right) {
             return left.Equals(right);
         }
@@ -34,9 +38,13 @@ namespace EjerciciosCurso {
         public static bool operator !=(Point left, Point right) {
             return !(left == right);
         }
+
+        public override string ToString() {
+            return $"Punto [X: {X}, Y: {Y}]";
+        }
     }
 
-    public class Line {
+    public class Line : IGrafico {
         private readonly Point punto1;
         private readonly Point punto2;
 
@@ -45,11 +53,18 @@ namespace EjerciciosCurso {
             this.punto2 = punto2;
         }
 
-        public Point Punto1 { get => punto1.Clone() as Point;  }
-        public Point Punto2 { get => punto2.Clone() as Point;  }
+        public Point Punto1 { get => punto1.Clone() as Point; }
+        public Point Punto2 { get => punto2.Clone() as Point; }
 
         public double DeltaX() { return Math.Abs(Punto1.X - Punto2.X); }
         public double DeltaY() { return Math.Abs(Punto1.Y - Punto2.Y); }
+
+        public override string ToString() {
+            return $"Linea [1: {punto1} 2: {punto2}]";
+        }
+        public void Pintate() {
+            Console.WriteLine(ToString());
+        }
     }
 
     class Ejercicio1 {

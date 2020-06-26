@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Text;
 
 namespace EjerciciosCurso {
-    public abstract class Figura {
+    public abstract class Figura: IGrafico {
         public Color Color { get; set; } = Color.Transparent;
 
         public Figura() { }
@@ -14,6 +14,11 @@ namespace EjerciciosCurso {
 
         public abstract double Area { get; }
         // public abstract double dameArea();
+
+        public void Pintate() {
+            Console.WriteLine(ToString());
+        }
+
     }
 
     public class Circulo : Figura {
