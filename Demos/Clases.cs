@@ -1,17 +1,25 @@
-﻿using System;
+﻿using CsvHelper.Configuration.Attributes;
+using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Majorel.Demos.Cursos {
+    [Serializable]
     public abstract partial class Persona : IGrafico, ICloneable {
         protected static int cont = 0;
         private int id;
         protected string nombre, apellidos;
+        [NonSerialized]
+        int aux = 1;
 
         public Persona(string nombre, string apellidos) {
             this.Nombre = nombre;
             this.apellidos = apellidos;
         }
+        [Name("id")]
+        public int Id { get => id; set => id = value; }
+        [Name("nombre")]
         public string Nombre {
             get {
                 return nombre;
@@ -19,11 +27,16 @@ namespace Majorel.Demos.Cursos {
             set {
                 if (String.IsNullOrWhiteSpace(value)) // (value == null || value == "")
                     throw new Exception("Nombre invalido");
-                
+
                 if (nombre == value) return;
                 nombre = value;
             }
         }
+        [Name("apellidos")]
+        public string Apellidos { get => apellidos; set => apellidos = value; }
+        [Name("edad")]
+        public int Edad { get; set; } = -1;
+        [Ignore]
         public string NombreLargo {
             get {
                 return $"{nombre} {apellidos}";
@@ -36,11 +49,6 @@ namespace Majorel.Demos.Cursos {
                 apellidos = partes[1];
             }
         }
-
-        public int Edad { get; set; } = 25;
-        public int Id { get => id; set => id = value; }
-        public string Apellidos { get => apellidos; set => apellidos = value; }
-
         public virtual void Pintate() {
             Console.WriteLine($"Persona: {nombre} {apellidos} de un total de {cont}");
         }
@@ -77,7 +85,8 @@ namespace Majorel.Demos.Cursos {
         }
 
     }
-    public class Alumno : Persona {
+    [Serializable]
+    public class Alumno : Persona , ISerializable {
         public Alumno(string nombre, string apellidos) : base(nombre, apellidos) {
         }
         public Alumno(int id, string nombre, string apellidos, int edad) : base(nombre, apellidos) {
@@ -88,5 +97,15 @@ namespace Majorel.Demos.Cursos {
         public override void Despide() {
             throw new NotImplementedException();
         }
+
+        public Alumno(SerializationInfo info, StreamingContext context) : base("?", null) {
+            Id = info.GetInt32("id");
+            Nombre = info.GetString("nom");
+        }
+        public void GetObjectData(SerializationInfo info, StreamingContext context) {
+            info.AddValue("id", Id);
+            info.AddValue("nom", Nombre.ToUpper());
+        }
+
     }
 }
