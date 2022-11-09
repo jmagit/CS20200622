@@ -14,7 +14,7 @@ namespace EjerciciosCurso {
 #if DEBUG
                 Console.WriteLine($"Dame un número entre el {NUMERO_INICIAL} y {NUMERO_FINAL} ({objetivo}) [Intento {intento}]: ");
 #else
-                Console.WriteLine($"Dame un numero entre el {NUMERO_INICIAL} y {NUMERO_FINAL} [Intento {i}]: ");
+                Console.WriteLine($"Dame un numero entre el {NUMERO_INICIAL} y {NUMERO_FINAL} [Intento {intento}]: ");
 #endif
                 var leido = Console.ReadLine().ToLower();
                 if (leido == "fin") break;
